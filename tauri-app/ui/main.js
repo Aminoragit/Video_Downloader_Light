@@ -38,7 +38,6 @@ const elements = {
 
 const pageButtons = Array.from(document.querySelectorAll("[data-page-target]"));
 const pagePanels = Array.from(document.querySelectorAll("[data-page]"));
-const adCards = Array.from(document.querySelectorAll(".ad-card"));
 const donationButtons = Array.from(document.querySelectorAll("[data-open-url]"));
 
 const runtimeElements = {
@@ -81,6 +80,7 @@ function showPage(pageName) {
     button.setAttribute("aria-selected", String(isActive));
     button.tabIndex = isActive ? 0 : -1;
   });
+  window.setTimeout(refreshVisibleAdFrame, 0);
 }
 
 function setBusy(isBusy) {
@@ -377,17 +377,16 @@ async function chooseDownloadDir() {
   }
 }
 
-function wireAdFallbacks() {
-  adCards.forEach((card) => {
-    const frame = card.querySelector(".ad-frame");
-    if (!frame) return;
-    frame.addEventListener("load", () => {
-      card.classList.add("ad-loaded");
-    });
-    setTimeout(() => {
-      card.classList.add("ad-fallback-ready");
-    }, 2500);
-  });
+function refreshVisibleAdFrame() {
+  const frame = document.querySelector(".page.active .ad-frame");
+  if (!frame) return;
+  const src = frame.dataset.adSrc || frame.getAttribute("src");
+  if (!src) return;
+  frame.dataset.adSrc = src;
+  frame.setAttribute("src", "about:blank");
+  window.setTimeout(() => {
+    frame.setAttribute("src", src);
+  }, 80);
 }
 
 function wireEvents() {
@@ -415,6 +414,7 @@ function wireEvents() {
     try {
       await invoke("accept_legal");
       elements.legalOverlay.hidden = true;
+      refreshVisibleAdFrame();
       elements.url.focus();
     } catch (error) {
       appendLog(`[오류] 법적 고지 동의 저장 실패: ${error}`);
@@ -459,7 +459,6 @@ listen("history-updated", (event) => renderHistory(event.payload));
     resetDownloadMetadata();
     showPage(activePage);
     wireEvents();
-    wireAdFallbacks();
     await refreshStatus();
     await ensureComponents();
   } catch (error) {
