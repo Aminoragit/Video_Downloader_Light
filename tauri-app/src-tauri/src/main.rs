@@ -1,4 +1,8 @@
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 use serde::{Deserialize, Serialize};
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
 use std::{
     env, fs,
     fs::File,
@@ -14,6 +18,9 @@ use std::{
 };
 use tauri::{AppHandle, Emitter, Manager};
 use url::Url;
+
+#[cfg(windows)]
+const CREATE_NO_WINDOW: u32 = 0x08000000;
 
 const YTDLP_URL: &str = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe";
 const ARIA2_ZIP_URL: &str = "https://github.com/aria2/aria2/releases/download/release-1.37.0/aria2-1.37.0-win-64bit-build1.zip";
@@ -375,6 +382,13 @@ fn component_path(name: &str) -> Result<PathBuf, String> {
     Ok(bin_dir().join(filename))
 }
 
+fn suppress_console_window(command: &mut Command) {
+    #[cfg(windows)]
+    {
+        command.creation_flags(CREATE_NO_WINDOW);
+    }
+}
+
 fn component_status(name: &str) -> ComponentStatus {
     let path = component_path(name).unwrap_or_else(|_| bin_dir().join(name));
     ComponentStatus {
@@ -446,7 +460,9 @@ fn run_powershell_raw(script: &str) -> Result<String, String> {
         "[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding $false; \
          $OutputEncoding = [Console]::OutputEncoding; {script}"
     );
-    let output = Command::new("powershell.exe")
+    let mut command = Command::new("powershell.exe");
+    suppress_console_window(&mut command);
+    let output = command
         .args([
             "-NoProfile",
             "-Sta",
@@ -492,7 +508,9 @@ fn run_install_powershell(app: &AppHandle, name: &str, script: &str) -> Result<S
         "[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding $false; \
          $OutputEncoding = [Console]::OutputEncoding; {script}"
     );
-    let mut child = Command::new("powershell.exe")
+    let mut command = Command::new("powershell.exe");
+    suppress_console_window(&mut command);
+    let mut child = command
         .args([
             "-NoProfile",
             "-Sta",
@@ -760,6 +778,7 @@ fn validate_component_binary(name: &str, target: &Path) -> Result<(), String> {
     }
 
     let mut command = Command::new(target);
+    suppress_console_window(&mut command);
     match name {
         "ffmpeg" => {
             command.arg("-version");
@@ -810,7 +829,9 @@ fn should_open_external_ad_url(url: &Url) -> bool {
 }
 
 fn open_external_url(url: &Url) {
-    let _ = Command::new("rundll32.exe")
+    let mut command = Command::new("rundll32.exe");
+    suppress_console_window(&mut command);
+    let _ = command
         .args(["url.dll,FileProtocolHandler", url.as_str()])
         .spawn();
 }
@@ -973,6 +994,7 @@ fn pick_metadata_size(metadata: &serde_json::Value) -> (Option<u64>, bool) {
 }
 
 fn run_metadata_command(mut command: Command, timeout: Duration) -> Option<Vec<u8>> {
+    suppress_console_window(&mut command);
     let stdout_path = env::temp_dir().join(format!(
         "vdl-metadata-{}-{}.json",
         std::process::id(),
@@ -1207,6 +1229,7 @@ fn start_download(app: AppHandle, request: DownloadRequest) -> Result<(), String
         let out_template = save_dir.join("%(title).200B [%(id)s].%(ext)s");
         let format_selector = format_selector(&request, has_ffmpeg);
         let mut command = Command::new(&ytdlp);
+        suppress_console_window(&mut command);
         command
             .arg("--ignore-config")
             .arg("--no-playlist")
