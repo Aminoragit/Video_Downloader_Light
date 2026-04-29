@@ -32,7 +32,7 @@ Video Downloader Light はローカルファーストのデスクトップアプ
 ## ダウンロード
 
 - 最新リリースページ：[GitHub Releases](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest)
-- インストーラー直接リンク：[Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
+- インストーラー直接リンク：[Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest/download/Video.Downloader.Light_0.1.0_x64-setup.exe)
 
 ## 主な機能
 

@@ -32,7 +32,7 @@ Video Downloader Light 是一款本地优先的桌面应用。服务器不会代
 ## 下载
 
 - 最新发布页：[GitHub Releases](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest)
-- 安装包直接链接：[Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
+- 安装包直接链接：[Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest/download/Video.Downloader.Light_0.1.0_x64-setup.exe)
 
 ## 主要功能
 

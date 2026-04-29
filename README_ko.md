@@ -32,7 +32,7 @@ Video Downloader Light는 로컬 우선 방식의 데스크톱 앱입니다. 서
 ## 다운로드
 
 - 최신 릴리스 페이지: [GitHub Releases](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest)
-- 설치 파일 직접 링크: [Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
+- 설치 파일 직접 링크: [Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest/download/Video.Downloader.Light_0.1.0_x64-setup.exe)
 
 ## 주요 기능
 
