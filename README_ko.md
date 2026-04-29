@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/weallnoob/Video_Downloader/releases/latest">
+  <a href="https://github.com/Aminoragit/Video_Downloader_Light/releases/latest">
     <img src="https://img.shields.io/badge/다운로드-Latest%20Release-2459C6?style=for-the-badge" alt="최신 릴리스 다운로드">
   </a>
   <img src="https://img.shields.io/badge/Platform-Windows-207965?style=for-the-badge" alt="Windows">
@@ -31,8 +31,8 @@ Video Downloader Light는 로컬 우선 방식의 데스크톱 앱입니다. 서
 
 ## 다운로드
 
-- 최신 릴리스 페이지: [GitHub Releases](https://github.com/weallnoob/Video_Downloader/releases/latest)
-- 설치 파일 직접 링크: [Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/weallnoob/Video_Downloader/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
+- 최신 릴리스 페이지: [GitHub Releases](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest)
+- 설치 파일 직접 링크: [Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
 
 ## 주요 기능
 
@@ -103,7 +103,7 @@ build-tauri.ps1       Windows 빌드 헬퍼
 ## 후원 및 문의
 
 - 후원: [Buy Me a Coffee](https://www.buymeacoffee.com/aminora)
-- 이슈: [GitHub Issues](https://github.com/weallnoob/Video_Downloader/issues)
+- 이슈: [GitHub Issues](https://github.com/Aminoragit/Video_Downloader_Light/issues)
 
 ## 라이선스
 

@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/weallnoob/Video_Downloader/releases/latest">
+  <a href="https://github.com/Aminoragit/Video_Downloader_Light/releases/latest">
     <img src="https://img.shields.io/badge/下载-Latest%20Release-2459C6?style=for-the-badge" alt="下载最新版本">
   </a>
   <img src="https://img.shields.io/badge/Platform-Windows-207965?style=for-the-badge" alt="Windows">
@@ -31,8 +31,8 @@ Video Downloader Light 是一款本地优先的桌面应用。服务器不会代
 
 ## 下载
 
-- 最新发布页：[GitHub Releases](https://github.com/weallnoob/Video_Downloader/releases/latest)
-- 安装包直接链接：[Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/weallnoob/Video_Downloader/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
+- 最新发布页：[GitHub Releases](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest)
+- 安装包直接链接：[Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
 
 ## 主要功能
 
@@ -103,7 +103,7 @@ build-tauri.ps1       Windows 构建脚本
 ## 支持
 
 - 捐赠：[Buy Me a Coffee](https://www.buymeacoffee.com/aminora)
-- 问题反馈：[GitHub Issues](https://github.com/weallnoob/Video_Downloader/issues)
+- 问题反馈：[GitHub Issues](https://github.com/Aminoragit/Video_Downloader_Light/issues)
 
 ## 许可证
 

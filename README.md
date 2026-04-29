@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/weallnoob/Video_Downloader/releases/latest">
+  <a href="https://github.com/Aminoragit/Video_Downloader_Light/releases/latest">
     <img src="https://img.shields.io/badge/Download-Latest%20Release-2459C6?style=for-the-badge" alt="Download latest release">
   </a>
   <img src="https://img.shields.io/badge/Platform-Windows-207965?style=for-the-badge" alt="Windows">
@@ -31,8 +31,8 @@ The installer is intentionally small. Required binaries are downloaded from thei
 
 ## Download
 
-- Latest release page: [GitHub Releases](https://github.com/weallnoob/Video_Downloader/releases/latest)
-- Direct installer link: [Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/weallnoob/Video_Downloader/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
+- Latest release page: [GitHub Releases](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest)
+- Direct installer link: [Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/Aminoragit/Video_Downloader_Light/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
 
 ## Key Features
 
@@ -103,7 +103,7 @@ build-tauri.ps1       Windows build helper
 ## Support
 
 - Donation: [Buy Me a Coffee](https://www.buymeacoffee.com/aminora)
-- Issues: [GitHub Issues](https://github.com/weallnoob/Video_Downloader/issues)
+- Issues: [GitHub Issues](https://github.com/Aminoragit/Video_Downloader_Light/issues)
 
 ## License
 
