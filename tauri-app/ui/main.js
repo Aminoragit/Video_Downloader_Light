@@ -8,7 +8,6 @@ const elements = {
   ytdlpDot: document.querySelector("#ytdlpDot"),
   ffmpegDot: document.querySelector("#ffmpegDot"),
   aria2cDot: document.querySelector("#aria2cDot"),
-  refreshStatus: document.querySelector("#refreshStatus"),
   downloadButton: document.querySelector("#downloadButton"),
   url: document.querySelector("#url"),
   saveDir: document.querySelector("#saveDir"),
@@ -19,6 +18,10 @@ const elements = {
   statusText: document.querySelector("#statusText"),
   progressText: document.querySelector("#progressText"),
   progressBar: document.querySelector("#progressBar"),
+  progressStage: document.querySelector("#progressStage"),
+  saveDirSummary: document.querySelector("#saveDirSummary"),
+  optionSummary: document.querySelector("#optionSummary"),
+  fileSummary: document.querySelector("#fileSummary"),
   installDetail: document.querySelector("#installDetail"),
   log: document.querySelector("#log"),
   saveSettings: document.querySelector("#saveSettings"),
@@ -67,13 +70,11 @@ function appendLog(message) {
 
 function showPage(pageName) {
   activePage = pageName;
-
   pagePanels.forEach((panel) => {
     const isActive = panel.dataset.page === pageName;
     panel.hidden = !isActive;
     panel.setAttribute("aria-hidden", String(!isActive));
   });
-
   pageButtons.forEach((button) => {
     const isActive = button.dataset.pageTarget === pageName;
     button.classList.toggle("active", isActive);
@@ -84,22 +85,35 @@ function showPage(pageName) {
 
 function setBusy(isBusy) {
   elements.downloadButton.disabled = isBusy;
-  elements.refreshStatus.disabled = isBusy;
-  elements.saveSettings.disabled = isBusy;
   elements.chooseSaveDir.disabled = isBusy;
-  elements.saveDir.disabled = isBusy;
 }
 
 function setProgress(percent, message) {
   const value = Math.max(0, Math.min(100, Number(percent) || 0));
   elements.progressBar.style.width = `${value}%`;
   elements.progressText.textContent = `${value.toFixed(1)}%`;
-  if (message) elements.statusText.textContent = message;
+  if (message) {
+    elements.statusText.textContent = message;
+    elements.progressStage.textContent = message;
+  }
 }
 
 function setInstallDetail(message, show = true) {
   elements.installDetail.textContent = message || "";
   elements.installDetail.hidden = !show;
+  if (message) elements.progressStage.textContent = message;
+}
+
+function optionLabel() {
+  const mode = elements.mode.options[elements.mode.selectedIndex]?.textContent || elements.mode.value;
+  const video = elements.quality.options[elements.quality.selectedIndex]?.textContent || elements.quality.value;
+  const audio = elements.audioQuality.options[elements.audioQuality.selectedIndex]?.textContent || elements.audioQuality.value;
+  return `${mode} · V ${video} · A ${audio}`;
+}
+
+function refreshSummaries() {
+  elements.saveDirSummary.textContent = elements.saveDir.value || "기본 폴더";
+  elements.optionSummary.textContent = optionLabel();
 }
 
 function setDownloadMetadata(metadata = {}) {
@@ -112,6 +126,7 @@ function setDownloadMetadata(metadata = {}) {
   elements.downloadTitle.textContent = title;
   elements.downloadDuration.textContent = duration;
   elements.downloadSize.textContent = size;
+  elements.fileSummary.textContent = title === "다운로드 대기 중" ? "정보 확인 전" : `${title} · ${size}`;
 
   if (thumbnail) {
     elements.downloadThumbnail.src = thumbnail;
@@ -126,6 +141,8 @@ function setDownloadMetadata(metadata = {}) {
 
 function resetDownloadMetadata(status = "다운로드 대기 중") {
   setDownloadMetadata({ title: status, duration: "-", size: "-", thumbnail: "" });
+  elements.progressStage.textContent = status;
+  refreshSummaries();
 }
 
 function componentLabel(name) {
@@ -146,19 +163,16 @@ function setRuntimeDot(dot, state) {
 function renderComponentStatus(name, component) {
   const target = runtimeElements[name];
   if (!target) return;
-
   if (installingComponents.has(name)) {
     target.status.textContent = "설치 중";
     setRuntimeDot(target.dot, "pending");
     return;
   }
-
   if (component.installed) {
     target.status.textContent = "설치됨";
     setRuntimeDot(target.dot, "ok");
     return;
   }
-
   target.status.textContent = failedComponents.has(name) ? "실패" : "미설치";
   setRuntimeDot(target.dot, "fail");
 }
@@ -175,21 +189,16 @@ function currentSettings() {
 
 function applySettings(settings) {
   if (!settings) return;
-
-  const mode = validModes.has(settings.mode) ? settings.mode : "all";
-  const quality = validVideoQualities.has(settings.quality) ? settings.quality : "best";
-  const audioQuality = validAudioQualities.has(settings.audioQuality) ? settings.audioQuality : "best";
-
   elements.saveDir.value = settings.saveDir || elements.saveDir.value;
-  elements.mode.value = mode;
-  elements.quality.value = quality;
-  elements.audioQuality.value = audioQuality;
+  elements.mode.value = validModes.has(settings.mode) ? settings.mode : "all";
+  elements.quality.value = validVideoQualities.has(settings.quality) ? settings.quality : "best";
+  elements.audioQuality.value = validAudioQualities.has(settings.audioQuality) ? settings.audioQuality : "best";
   elements.legalOverlay.hidden = Boolean(settings.legalAccepted);
+  refreshSummaries();
 }
 
 function renderHistory(records = []) {
   elements.historyList.textContent = "";
-
   if (!records.length) {
     const empty = document.createElement("p");
     empty.className = "hint empty-state";
@@ -197,38 +206,32 @@ function renderHistory(records = []) {
     elements.historyList.append(empty);
     return;
   }
-
   for (const record of records) {
     const item = document.createElement("article");
     item.className = "history-item";
-
     const body = document.createElement("div");
     const title = document.createElement("strong");
     title.textContent = record.url;
     const meta = document.createElement("span");
     meta.textContent = `${record.status} | ${record.requestedAt} | ${record.outputDir}`;
     body.append(title, meta);
-
     const actions = document.createElement("div");
     actions.className = "history-actions";
-
     const requestAgain = document.createElement("button");
     requestAgain.className = "ghost small-button";
     requestAgain.type = "button";
-    requestAgain.textContent = "새로 다운로드 요청";
+    requestAgain.textContent = "새 요청";
     requestAgain.addEventListener("click", () => {
       elements.url.value = record.url;
       showPage("download");
       elements.url.focus();
       appendLog("[정보] 과거 URL을 입력칸에 불러왔습니다. 다운로드 버튼을 눌러야 실제 작업이 시작됩니다.");
     });
-
     const remove = document.createElement("button");
     remove.className = "ghost small-button danger-button";
     remove.type = "button";
     remove.textContent = "삭제";
     remove.addEventListener("click", () => deleteHistory(record.id));
-
     actions.append(requestAgain, remove);
     item.append(body, actions);
     elements.historyList.append(item);
@@ -236,11 +239,7 @@ function renderHistory(records = []) {
 }
 
 function missingComponents(state) {
-  return [
-    ["ytdlp", state.ytdlp],
-    ["ffmpeg", state.ffmpeg],
-    ["aria2c", state.aria2c]
-  ].filter(([, component]) => !component.installed);
+  return [["ytdlp", state.ytdlp], ["ffmpeg", state.ffmpeg], ["aria2c", state.aria2c]].filter(([, component]) => !component.installed);
 }
 
 async function refreshStatus() {
@@ -253,9 +252,8 @@ async function refreshStatus() {
   return state;
 }
 
-async function saveCurrentSettings(showToast = true) {
+async function saveCurrentSettings() {
   await invoke("save_settings", { settings: currentSettings() });
-  if (showToast) appendLog("[정보] 설정을 저장했습니다.");
 }
 
 async function installComponent(name) {
@@ -265,7 +263,6 @@ async function installComponent(name) {
   appendLog(`[정보] ${componentLabel(name)} 설치를 시작합니다.`);
   setProgress(runtimeOverallPercent(name, 0), INSTALLING_MESSAGE);
   setInstallDetail(`${componentLabel(name)}: 설치 준비 중`);
-
   try {
     const result = await invoke("install_component", { name });
     appendLog(result);
@@ -288,7 +285,6 @@ async function installComponent(name) {
 async function ensureComponents() {
   if (autoInstallStarted) return;
   autoInstallStarted = true;
-
   let state;
   try {
     state = await refreshStatus();
@@ -296,25 +292,19 @@ async function ensureComponents() {
     autoInstallStarted = false;
     throw error;
   }
-
   const missing = missingComponents(state);
   if (!missing.length) return;
-
   runtimeInstallPlan = missing.map(([name]) => name);
   setBusy(true);
   setProgress(0, INSTALLING_MESSAGE);
   setInstallDetail("필수 구성요소 설치를 준비 중입니다.");
   appendLog("[정보] 필수 구성요소 자동 설치를 시작합니다.");
-
   try {
-    for (const [name] of missing) {
-      await installComponent(name);
-    }
+    for (const [name] of missing) await installComponent(name);
   } finally {
     setBusy(false);
     const latest = await refreshStatus();
     const stillMissing = missingComponents(latest).length > 0;
-
     if (stillMissing) {
       autoInstallStarted = false;
       elements.statusText.textContent = "구성요소 설치 확인 필요";
@@ -322,7 +312,6 @@ async function ensureComponents() {
       setProgress(100, "다운로드 준비 완료");
       setInstallDetail("필수 파일 설치가 완료되었습니다.");
     }
-
     runtimeInstallPlan = [];
   }
 }
@@ -335,21 +324,19 @@ async function startDownload() {
     elements.url.focus();
     return;
   }
-
   if (installingComponents.size) {
     appendLog("[알림] 필수 구성요소 설치가 끝난 뒤 다운로드할 수 있습니다.");
     return;
   }
-
   showPage("download");
   setBusy(true);
   setProgress(0, "다운로드 준비 중...");
   setInstallDetail("", false);
   resetDownloadMetadata("영상 정보를 불러오는 중");
   elements.log.textContent = "";
-
+  refreshSummaries();
   try {
-    await saveCurrentSettings(false);
+    await saveCurrentSettings();
     await invoke("start_download", {
       request: {
         url,
@@ -363,6 +350,7 @@ async function startDownload() {
   } catch (error) {
     appendLog(`[오류] ${error}`);
     elements.statusText.textContent = "다운로드 실패";
+    elements.progressStage.textContent = "다운로드 실패";
     setBusy(false);
   }
 }
@@ -382,7 +370,8 @@ async function chooseDownloadDir() {
     const selected = await invoke("choose_download_dir", { current: elements.saveDir.value.trim() });
     if (!selected) return;
     elements.saveDir.value = selected;
-    await saveCurrentSettings(false);
+    refreshSummaries();
+    await saveCurrentSettings();
     appendLog(`[정보] 저장 폴더를 변경했습니다: ${selected}`);
   } catch (error) {
     appendLog(`[오류] 저장 폴더 선택 실패: ${error}`);
@@ -394,13 +383,11 @@ function wireAdFallbacks() {
     const frame = card.querySelector(".ad-frame");
     const fallback = card.querySelector(".ad-fallback");
     if (!frame || !fallback) return;
-
     let loaded = false;
     frame.addEventListener("load", () => {
       loaded = true;
       fallback.hidden = true;
     });
-
     setTimeout(() => {
       if (!loaded) fallback.hidden = false;
     }, 5000);
@@ -408,10 +395,7 @@ function wireAdFallbacks() {
 }
 
 function wireEvents() {
-  pageButtons.forEach((button) => {
-    button.addEventListener("click", () => showPage(button.dataset.pageTarget));
-  });
-
+  pageButtons.forEach((button) => button.addEventListener("click", () => showPage(button.dataset.pageTarget)));
   donationButtons.forEach((button) => {
     button.addEventListener("click", async () => {
       try {
@@ -421,25 +405,15 @@ function wireEvents() {
       }
     });
   });
-
-  elements.refreshStatus.addEventListener("click", async () => {
-    try {
-      await refreshStatus();
-      await ensureComponents();
-    } catch (error) {
-      appendLog(`[오류] 상태 확인 실패: ${error}`);
-    }
-  });
   elements.downloadButton.addEventListener("click", startDownload);
-  elements.saveSettings.addEventListener("click", () => saveCurrentSettings(true));
   elements.clearHistory.addEventListener("click", clearHistory);
-  elements.saveDir.addEventListener("click", chooseDownloadDir);
-  elements.saveDir.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter" && event.key !== " ") return;
-    event.preventDefault();
-    chooseDownloadDir();
-  });
   elements.chooseSaveDir.addEventListener("click", chooseDownloadDir);
+  [elements.mode, elements.quality, elements.audioQuality].forEach((select) => {
+    select.addEventListener("change", async () => {
+      refreshSummaries();
+      await saveCurrentSettings();
+    });
+  });
   elements.acceptLegal.addEventListener("click", async () => {
     elements.acceptLegal.disabled = true;
     try {
@@ -464,22 +438,20 @@ listen("install-progress", (event) => {
   const { name, percent, message } = event.payload;
   const overall = runtimeOverallPercent(name, percent);
   setProgress(overall, INSTALLING_MESSAGE);
-  const label = componentLabel(name);
-  const detail = `${label}: ${message || "설치 중"}`;
+  const detail = `${componentLabel(name)}: ${message || "설치 중"}`;
   setInstallDetail(detail);
-
-  if (percent === 0 || percent === 100 || String(message || "").includes("압축") || String(message || "").includes("검증")) {
-    appendLog(`[설치] ${detail}`);
-  }
+  if (percent === 0 || percent === 100 || String(message || "").includes("압축") || String(message || "").includes("검증")) appendLog(`[설치] ${detail}`);
 });
 listen("download-finished", async (event) => {
   setProgress(100, "다운로드 완료");
+  elements.progressStage.textContent = "완료 후 이력 업데이트";
   appendLog(event.payload);
   setBusy(false);
   await refreshStatus();
 });
 listen("download-failed", (event) => {
   elements.statusText.textContent = "다운로드 실패";
+  elements.progressStage.textContent = "실패";
   appendLog(`[오류] ${event.payload}`);
   setBusy(false);
 });

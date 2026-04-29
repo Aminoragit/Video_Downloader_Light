@@ -59,52 +59,52 @@
     <main class="shell">
       <section class="hero hero-compact">
         <div>
-          <p class="eyebrow">Local-first downloader</p>
+          <p class="eyebrow">Local-first</p>
           <h1>Video Downloader Light</h1>
-          <p class="subcopy">입력, 진행, 이력, 후원을 각 페이지로 나눠 필요한 정보만 보여줍니다.</p>
+          <p class="subcopy">URL을 입력하고 옵션을 선택하면 PC에서 직접 다운로드합니다.</p>
         </div>
-        <div class="hero-actions">
-          <div class="runtime-strip" aria-label="필수 구성요소 설치 상태">
-            <div class="runtime-pill"><span id="ytdlpDot" class="runtime-dot pending" aria-hidden="true"></span><strong>yt-dlp</strong><span id="ytdlpStatus" class="runtime-status">확인 중</span></div>
-            <div class="runtime-pill"><span id="ffmpegDot" class="runtime-dot pending" aria-hidden="true"></span><strong>ffmpeg</strong><span id="ffmpegStatus" class="runtime-status">확인 중</span></div>
-            <div class="runtime-pill"><span id="aria2cDot" class="runtime-dot pending" aria-hidden="true"></span><strong>aria2c</strong><span id="aria2cStatus" class="runtime-status">확인 중</span></div>
-          </div>
-          <button id="refreshStatus" class="ghost small-button">상태 새로고침</button>
+        <div class="runtime-strip" aria-label="필수 구성요소 설치 상태">
+          <div class="runtime-pill"><span id="ytdlpDot" class="runtime-dot pending" aria-hidden="true"></span><strong>yt-dlp</strong><span id="ytdlpStatus" class="runtime-status">확인 중</span></div>
+          <div class="runtime-pill"><span id="ffmpegDot" class="runtime-dot pending" aria-hidden="true"></span><strong>ffmpeg</strong><span id="ffmpegStatus" class="runtime-status">확인 중</span></div>
+          <div class="runtime-pill"><span id="aria2cDot" class="runtime-dot pending" aria-hidden="true"></span><strong>aria2c</strong><span id="aria2cStatus" class="runtime-status">확인 중</span></div>
         </div>
       </section>
 
       <nav class="page-tabs" role="tablist" aria-label="앱 페이지">
         <button id="tab-download" class="page-tab active" data-page-target="download" role="tab" aria-controls="downloadPage" aria-selected="true" type="button">다운로드</button>
         <button id="tab-history" class="page-tab" data-page-target="history" role="tab" aria-controls="historyPage" aria-selected="false" type="button">이력</button>
-        <button id="tab-donation" class="page-tab" data-page-target="donation" role="tab" aria-controls="donationPage" aria-selected="false" type="button">도네이션</button>
       </nav>
 
       <section id="downloadPage" class="page active" data-page="download" role="tabpanel" aria-labelledby="tab-download">
         <section class="card input-card">
-          <div class="card-heading">
-            <p class="eyebrow">1-1</p>
-            <h2>새 다운로드 요청</h2>
+          <div class="card-heading card-heading-row">
+            <div>
+              <h2>새 다운로드 요청</h2>
+              <p class="card-subtitle">저장 경로는 우측 폴더 아이콘에서 선택합니다.</p>
+            </div>
+            <button id="chooseSaveDir" class="icon-button" type="button" aria-label="저장 폴더 선택" title="저장 폴더 선택">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 6.8A2.8 2.8 0 0 1 5.8 4h4.05l2 2H18.2A2.8 2.8 0 0 1 21 8.8v7.4a2.8 2.8 0 0 1-2.8 2.8H5.8A2.8 2.8 0 0 1 3 16.2V6.8Z" />
+                <path d="M7 13h10M12 9v8" />
+              </svg>
+            </button>
           </div>
+
+          <input id="saveDir" type="hidden" />
+
           <div class="field">
             <label for="url">URL 입력</label>
             <div class="url-row">
               <input id="url" type="url" placeholder="https://www.youtube.com/watch?v=..." />
-              <button id="downloadButton" class="primary">다운로드 시작</button>
+              <button id="downloadButton" class="primary">다운로드</button>
             </div>
           </div>
 
-          <div class="settings-grid">
+          <div class="settings-grid compact-options">
             <div class="field">
-              <label for="saveDir">저장 경로</label>
-              <div class="folder-row">
-                <input id="saveDir" type="text" readonly aria-readonly="true" title="클릭하여 저장 폴더를 선택" />
-                <button id="chooseSaveDir" class="ghost" type="button">찾기</button>
-              </div>
-            </div>
-            <div class="field">
-              <label for="mode">다운로드 유형</label>
+              <label for="mode">유형</label>
               <select id="mode">
-                <option value="all">All (비디오 + 오디오)</option>
+                <option value="all">All</option>
                 <option value="video">비디오</option>
                 <option value="audio">오디오</option>
               </select>
@@ -131,15 +131,13 @@
               </select>
             </div>
           </div>
-          <div class="action-row">
-            <button id="saveSettings" class="ghost">설정 저장</button>
-          </div>
+          <button id="saveSettings" class="ghost" hidden>설정 저장</button>
         </section>
 
         <section class="card progress-card">
           <div class="card-heading">
-            <p class="eyebrow">1-2</p>
             <h2>진행 과정</h2>
+            <p class="card-subtitle">영상 정보, 저장 위치, 선택 옵션, 다운로드 로그를 함께 확인합니다.</p>
           </div>
           <div class="download-progress-layout">
             <div class="thumbnail-frame">
@@ -160,10 +158,18 @@
               <p id="installDetail" class="install-detail" hidden></p>
             </div>
           </div>
+
+          <div class="progress-detail-grid" aria-label="다운로드 상세 정보">
+            <div><span>현재 단계</span><strong id="progressStage">준비 전</strong></div>
+            <div><span>저장 위치</span><strong id="saveDirSummary">기본 폴더</strong></div>
+            <div><span>선택 옵션</span><strong id="optionSummary">All · 자동 최고</strong></div>
+            <div><span>예상 파일</span><strong id="fileSummary">정보 확인 전</strong></div>
+          </div>
+
           <pre id="log"></pre>
         </section>
 
-        <section class="ad-card" aria-label="광고 영역 1-3">
+        <section class="ad-card" aria-label="광고 영역">
           <div class="ad-label">광고</div>
           <iframe class="ad-frame" title="제휴 광고" src="https://ads-partners.coupang.com/widgets.html?id=977251&template=carousel&trackingCode=AF8246234&subId=&width=100%25&height=100%25&tsource=" referrerpolicy="unsafe-url" loading="lazy"></iframe>
           <div class="ad-fallback" aria-live="polite" hidden>광고를 불러오지 못했습니다. 네트워크 또는 광고 차단 설정을 확인하세요.</div>
@@ -174,36 +180,26 @@
         <section class="card">
           <div class="section-toolbar">
             <div class="card-heading compact-heading">
-              <p class="eyebrow">2-1</p>
               <h2>이전 다운로드 이력</h2>
+              <p class="card-subtitle">과거 URL을 불러와 새 요청으로 다시 준비할 수 있습니다.</p>
             </div>
             <button id="clearHistory" class="ghost small-button">전체 삭제</button>
           </div>
           <div id="historyList" class="history-list" aria-live="polite"></div>
         </section>
 
-        <section class="ad-card" aria-label="광고 영역 2-2">
+        <section class="ad-card" aria-label="광고 영역">
           <div class="ad-label">광고</div>
           <iframe class="ad-frame" title="제휴 광고" src="https://ads-partners.coupang.com/widgets.html?id=977251&template=carousel&trackingCode=AF8246234&subId=history&width=100%25&height=100%25&tsource=" referrerpolicy="unsafe-url" loading="lazy"></iframe>
           <div class="ad-fallback" aria-live="polite" hidden>광고를 불러오지 못했습니다. 네트워크 또는 광고 차단 설정을 확인하세요.</div>
         </section>
       </section>
 
-      <section id="donationPage" class="page" data-page="donation" role="tabpanel" aria-labelledby="tab-donation" hidden>
-        <section class="card donation-card">
-          <p class="eyebrow">3. Donation</p>
-          <h2>이 앱을 계속 가볍게 유지하기 위한 후원</h2>
-          <p>서버 비용을 최소화하고, 다운로드 기능은 사용자 PC에서 직접 실행되도록 유지합니다. 후원은 테스트 인프라와 유지보수 시간을 확보하는 데 사용됩니다.</p>
-          <div class="donation-actions">
-            <button class="primary" data-open-url="https://www.buymeacoffee.com/aminora" type="button">Buy Me a Coffee</button>
-            <button class="ghost" data-open-url="https://github.com/weallnoob/Video_Downloader" type="button">GitHub 보기</button>
-          </div>
-          <div class="donation-note">
-            <strong>운영 원칙</strong>
-            <span>광고와 후원은 유지하되, 다운로드 파일 처리와 개인 데이터는 서버로 보내지 않습니다.</span>
-          </div>
-        </section>
-      </section>
+      <footer class="donate-footer">
+        <button class="donate-link" data-open-url="https://www.buymeacoffee.com/aminora" type="button" aria-label="Donate">
+          <span>Donate</span><span class="banana-icon" aria-hidden="true">🍌</span>
+        </button>
+      </footer>
     </main>
 
     <script type="module" src="./main.js"></script>

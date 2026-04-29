@@ -12,10 +12,10 @@
       {
         "title": "Video Downloader Light",
         "label": "main",
-        "width": 1060,
-        "height": 780,
-        "minWidth": 820,
-        "minHeight": 680
+        "width": 636,
+        "height": 468,
+        "minWidth": 560,
+        "minHeight": 420
       }
     ],
     "security": {
