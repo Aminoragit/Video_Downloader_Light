@@ -847,9 +847,15 @@ fn open_external_link(url: String) -> Result<(), String> {
         .host_str()
         .map(normalize_host)
         .ok_or_else(|| "도메인을 확인할 수 없습니다.".to_string())?;
-    let allowed = ["buymeacoffee.com", "github.com"]
-        .iter()
-        .any(|domain| host_matches(&host, domain));
+    let allowed = [
+        "buymeacoffee.com",
+        "github.com",
+        "coupang.com",
+        "link.coupang.com",
+        "ads-partners.coupang.com",
+    ]
+    .iter()
+    .any(|domain| host_matches(&host, domain));
     if !allowed {
         return Err("허용되지 않은 외부 링크입니다.".to_string());
     }

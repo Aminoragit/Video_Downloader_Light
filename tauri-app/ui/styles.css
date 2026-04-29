@@ -502,17 +502,18 @@ input::placeholder {
 }
 
 .ad-card {
-  height: 58px;
+  height: 92px;
   overflow: hidden;
-  padding: 6px;
+  padding: 7px;
 }
 
 .ad-card iframe {
-  position: relative;
+  position: absolute;
+  inset: 7px;
   z-index: 0;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 14px);
+  height: calc(100% - 14px);
   border: 0;
   border-radius: 10px;
   background: #fff;
@@ -534,18 +535,51 @@ input::placeholder {
 
 .ad-fallback {
   position: absolute;
-  right: 12px;
-  bottom: 10px;
+  inset: 7px;
   z-index: 1;
-  max-width: min(420px, calc(100% - 24px));
-  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px 10px 48px;
+  border: 1px solid rgba(198, 212, 204, 0.9);
   border-radius: 10px;
-  color: #fff;
-  background: rgba(23, 35, 49, 0.72);
-  text-align: center;
-  font-size: 9px;
-  font-weight: 800;
+  color: var(--ink);
+  background:
+    linear-gradient(90deg, rgba(249, 252, 250, 0.96), rgba(249, 252, 250, 0.72)),
+    radial-gradient(circle at 12% 50%, rgba(32, 121, 101, 0.16), transparent 30%);
   pointer-events: none;
+}
+
+.ad-card.ad-loaded:not(.ad-fallback-ready) .ad-fallback {
+  opacity: 0;
+}
+
+.ad-card.ad-loaded.ad-fallback-ready .ad-fallback {
+  opacity: 0.92;
+}
+
+.ad-fallback strong {
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.ad-fallback span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.ad-open-button {
+  min-height: 30px;
+  flex: 0 0 auto;
+  color: #fff;
+  background: linear-gradient(135deg, var(--green), var(--blue-deep));
+  pointer-events: auto;
 }
 
 .history-list {
@@ -609,22 +643,43 @@ input::placeholder {
 .donate-footer {
   display: flex;
   justify-content: center;
-  margin: 8px 0 0;
+  margin: 9px 0 0;
 }
 
 .donate-link {
-  min-height: 24px;
-  padding: 0 8px;
-  border-radius: 999px;
-  color: #5c6b7c;
-  background: transparent;
-  box-shadow: none;
+  min-height: 58px;
+  width: min(280px, 100%);
+  padding: 8px 14px;
+  border: 1px solid #f2d58a;
+  border-radius: 18px;
+  color: #51340a;
+  background:
+    radial-gradient(circle at 14% 20%, rgba(255, 255, 255, 0.72), transparent 20%),
+    linear-gradient(135deg, #fff5ca, #ffc857 58%, #f59e0b);
+  box-shadow: 0 10px 24px rgba(217, 119, 6, 0.2);
   font-size: 11px;
 }
 
 .banana-icon {
-  font-size: 14px;
+  font-size: 34px;
   line-height: 1;
+}
+
+.donate-copy {
+  display: grid;
+  gap: 2px;
+  text-align: left;
+}
+
+.donate-copy strong {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.donate-copy small {
+  color: rgba(81, 52, 10, 0.72);
+  font-size: 10px;
+  font-weight: 850;
 }
 
 .modal-backdrop {
@@ -702,6 +757,10 @@ input::placeholder {
   }
 
   .ad-card {
-    height: 64px;
+    height: 102px;
+  }
+
+  .ad-fallback {
+    padding-left: 38px;
   }
 }

@@ -193,7 +193,6 @@ function applySettings(settings) {
   elements.mode.value = validModes.has(settings.mode) ? settings.mode : "all";
   elements.quality.value = validVideoQualities.has(settings.quality) ? settings.quality : "best";
   elements.audioQuality.value = validAudioQualities.has(settings.audioQuality) ? settings.audioQuality : "best";
-  elements.legalOverlay.hidden = Boolean(settings.legalAccepted);
   refreshSummaries();
 }
 
@@ -381,16 +380,13 @@ async function chooseDownloadDir() {
 function wireAdFallbacks() {
   adCards.forEach((card) => {
     const frame = card.querySelector(".ad-frame");
-    const fallback = card.querySelector(".ad-fallback");
-    if (!frame || !fallback) return;
-    let loaded = false;
+    if (!frame) return;
     frame.addEventListener("load", () => {
-      loaded = true;
-      fallback.hidden = true;
+      card.classList.add("ad-loaded");
     });
     setTimeout(() => {
-      if (!loaded) fallback.hidden = false;
-    }, 5000);
+      card.classList.add("ad-fallback-ready");
+    }, 2500);
   });
 }
 
@@ -459,6 +455,7 @@ listen("history-updated", (event) => renderHistory(event.payload));
 
 (async () => {
   try {
+    elements.legalOverlay.hidden = false;
     resetDownloadMetadata();
     showPage(activePage);
     wireEvents();
