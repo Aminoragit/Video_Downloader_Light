@@ -1,185 +1,110 @@
 <p align="center">
-  <img src="assets/header_icon.svg" width="80" height="80" alt="Video Downloader Logo">
+  <img src="tauri-app/src-tauri/icons/icon-256x256.png" width="72" height="72" alt="Video Downloader Light icon">
 </p>
 
-<h1 align="center">🎬 Video Downloader</h1>
+<h1 align="center">Video Downloader Light</h1>
 
 <p align="center">
-  <b>🇺🇸 English</b> | <a href="README_ko.md">🇰🇷 한국어</a>
-</p>
-
-<p align="center">
-  <strong>A multi-purpose desktop app that securely backs up public videos with a single URL</strong>
+  <strong>A lightweight Windows desktop downloader that keeps the download work on the user's PC.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows">
-  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+">
-  <img src="https://img.shields.io/badge/UI-PySide6_(LGPL)-41CD52?style=for-the-badge&logo=qt&logoColor=white" alt="PySide6">
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="MIT License">
+  <a href="README.md"><b>English</b></a> ·
+  <a href="README_ko.md">한국어</a> ·
+  <a href="README_zh-CN.md">简体中文</a> ·
+  <a href="README_ja.md">日本語</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/weallnoob/Video_Downloader/releases/tag/Installer">
-    <img src="https://img.shields.io/badge/⬇_DOWNLOAD_INSTALLER-2563EB?style=for-the-badge&logoColor=white" alt="Download">
+  <a href="https://github.com/weallnoob/Video_Downloader/releases/latest">
+    <img src="https://img.shields.io/badge/Download-Latest%20Release-2459C6?style=for-the-badge" alt="Download latest release">
   </a>
-  &nbsp;
-  <a href="https://www.buymeacoffee.com/aminora">
-    <img src="https://img.shields.io/badge/☕_Buy_Me_a_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee">
-  </a>
+  <img src="https://img.shields.io/badge/Platform-Windows-207965?style=for-the-badge" alt="Windows">
+  <img src="https://img.shields.io/badge/App-Tauri%202-172331?style=for-the-badge" alt="Tauri 2">
 </p>
 
-<p align="center">
-  <a href="https://github.com/weallnoob/Video_Downloader">
-    <img src="assets/github_star.png" width="400" alt="Please Star the Repository">
-  </a>
-</p>
+## Overview
 
-<h3 align="center">⭐ If you find this project useful, please consider giving it a star! ⭐</h3>
+Video Downloader Light is a local-first desktop app. The server does not process or host downloaded media. Users install the app, paste a public video URL, choose the output options, and the app performs the work locally with `yt-dlp`, `ffmpeg`, and `aria2c`.
 
----
+The installer is intentionally small. Required binaries are downloaded from their official sources on first launch and stored under the user's local app data directory.
 
-## ✨ Features
+## Download
 
-- 🖱️ **One-Click Download:** Simply paste the URL and hit the download button to back up instantly with zero complicated setups.
-- 🛡️ **Strict Safelist Policy:** Automatically blocks Pay-Per-View/OTT and DRM contents. Supports over 60+ legal public platforms.
-- 🍪 **Absolute Privacy:** Never collects your browser cookies or personal login sessions.
-- ⚡ **Ultra-Fast Parallel Downloading:** Integrates `aria2c` for 16-way concurrent chunk downloading, multiplying your original speed.
-- 🎛️ **Granular Quality Control:** Choose exactly what you want—from 4K video resolution down to custom audio bitrates and forced formats (MP3, M4A, etc).
-- 📋 **Integrated History Management:** Massive local download records accompanied by thumbnails and 1-click quick retries.
-- 🎨 **Modern Desktop UI:** Clean, responsive, and rounded-corner design built on top of PySide6.
+- Latest release page: [GitHub Releases](https://github.com/weallnoob/Video_Downloader/releases/latest)
+- Direct installer link: [Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/weallnoob/Video_Downloader/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
 
----
+## Key Features
 
-## 🚀 Getting Started
+- Three-page UI: Download, History, Donation.
+- URL input with save-folder picker, video/audio/all mode, video quality, and audio quality.
+- Real-time progress area with thumbnail, title, duration, estimated size, progress bar, and logs.
+- Local download history with "request again" behavior that only fills the URL. The user must click download manually.
+- Automatic first-run setup for `yt-dlp`, `ffmpeg`, and `aria2c` with progress feedback.
+- Affiliate ad area and donation page without moving download processing to a server.
+- Legal notice before use, with explicit warnings about copyright, DRM, redistribution, and platform terms.
 
-![Simple UI](image.png)
+## How It Works
 
-### For End-Users
+1. Launch the app and accept the legal notice.
+2. The app checks required binaries and downloads missing components.
+3. Paste a supported public video URL.
+4. Choose save folder, download type, video quality, and audio quality.
+5. Click Download.
+6. Watch progress and review the result in the history page.
 
-1. Head over to the [**Releases**](https://github.com/weallnoob/Video_Downloader/releases/tag/Installer) page and download `VideoDownloaderInstaller.exe`.
-2. Run the installer. (During installation, it will automatically download necessary binaries like `yt-dlp`, `aria2c`, and `ffmpeg` from their official sources).
-3. Find **Video Downloader** on your Desktop or Start Menu and run it!
+## Privacy Model
 
-> **💡 Internet connection is required** — Essential binaries are dynamically downloaded during the installation process to save bundle space.
+- Media download work runs on the user's PC.
+- The app does not upload downloaded media to a service backend.
+- Browser cookies, login sessions, and authentication tokens are not automatically collected.
+- Settings and history are stored locally.
 
-### For Developers
+## Legal And Policy Notice
+
+This project is intended for lawful personal archiving of content that the user is authorized to access and save. It is not designed for DRM circumvention, paid OTT copying, access-control bypass, redistribution, resale, or commercial reuse of downloaded media.
+
+Users are responsible for following copyright law, local regulations, and each platform's terms of service.
+
+## Build From Source
+
+Requirements:
+
+- Windows
+- Node.js and npm
+- Rust toolchain
+- WebView2 Runtime
 
 ```powershell
-# Install dependencies
-python -m pip install -r requirements.txt
+# Build the Tauri installer
+.\build-tauri.ps1
 
-# Run directly
-python app.py
+# Or build directly
+cd tauri-app
+npm install
+npm run build
 ```
 
----
+The generated NSIS installer is created at:
 
-## 🔧 Building from Source
-
-To compile the executable, [**Inno Setup 6**](https://jrsoftware.org/isdl.php) is required.
-
-```powershell
-# Full build pipeline (PyInstaller → Inno Setup Installer)
-.\build.ps1
-
-# Options
-.\build.ps1 -OfflineMode              # Offline mode (skips auto-downloading components)
-.\build.ps1 -SkipInstaller            # Only build the application dist folder
-.\build.ps1 -SkipInstall -SkipDownload # Skip updating packages/binaries
+```text
+tauri-app/src-tauri/target/release/bundle/nsis/Video Downloader Light_0.1.0_x64-setup.exe
 ```
 
-<details>
-<summary>📦 <b>Detailed Build Pipeline</b></summary>
+## Project Structure
 
-| Step | Description |
-|------|-------------|
-| 1. Install | Install requirements via `requirements-build.txt` |
-| 2. PyInstaller | Bundle the codebase via `VideoDownloader.spec` into `dist/VideoDownloader/` |
-| 3. Optimize | Exclude heavy modules like `yt_dlp`, `cryptography`, and `opengl32sw.dll` to shrink size |
-| 4. Inno Setup | Compile the setup wizard into a single executable → `dist/VideoDownloaderInstaller.exe` |
+```text
+tauri-app/
+  ui/                 Frontend HTML, CSS, and JavaScript
+  src-tauri/          Rust backend, Tauri config, icons, installer build
+build-tauri.ps1       Windows build helper
+```
 
-- The wizard works in **Online Mode** by default—fetching `yt-dlp.exe`, `aria2c.exe`, and `ffmpeg.exe` only during the user's installation.
-- This results in an incredibly lightweight, distributable artifact over GitHub Releases.
+## Support
 
-</details>
+- Donation: [Buy Me a Coffee](https://www.buymeacoffee.com/aminora)
+- Issues: [GitHub Issues](https://github.com/weallnoob/Video_Downloader/issues)
 
----
+## License
 
-## 🌐 Supported Platforms
-
-<details>
-<summary>✅ <b>Allowed Platforms (60+)</b> — Click to Expand</summary>
-
-| Category | Platforms |
-|----------|-----------|
-| **Global Video** | YouTube, Vimeo, Dailymotion, Rumble, Odysee, BitChute, PeerTube, DTube |
-| **Social Media** | Facebook Watch, Instagram, X/Twitter, TikTok, Snapchat, Triller, LinkedIn |
-| **Streaming** | Twitch, Kick, Trovo, AfreecaTV, Chzzk |
-| **Korea** | Naver TV, KakaoTV, AfreecaTV, Chzzk |
-| **China** | Bilibili, Youku, iQIYI, Tencent Video, Douyin, AcFun, Mango TV |
-| **Japan / Russia** | Niconico, NHK World, VK Video, Rutube |
-| **Public Broadcaster**| BBC iPlayer, ITVX, All 4, My5, ARD, ZDF, France.tv |
-| **News / Edu** | TED, Coursera, Udemy, Al Jazeera, Bloomberg, CNN |
-| **Free VoD** | Tubi, Pluto TV, Crackle, FilmRise, MagellanTV |
-
-</details>
-
-<details>
-<summary>🚫 <b>Blocked Platforms (Premium OTT)</b></summary>
-
-Netflix, Hulu, Amazon Prime Video, Disney+, Apple TV+, HBO Max, Paramount+,
-Peacock, Crunchyroll, YouTube TV, ESPN+, Discovery+, FuboTV, Sling TV, etc.
-
-</details>
-
----
-
-## 🏗️ Technology Stack
-
-| Component | Tech | Role |
-|-----------|------|------|
-| **GUI** | PySide6 (Qt 6, LGPL) | Cross-platform desktop interface |
-| **Downloader** | yt-dlp | Core stream extraction & downloading engine |
-| **Accelerator** | aria2c | Hardware-accelerated 16-way concurrent chunks |
-| **Post-Processor** | ffmpeg | Video/Audio merging and format conversion |
-| **Build Agent** | PyInstaller + Inno Setup | Creating standalone distribution |
-
----
-
-## ⚖️ Legal Notice
-
-<details>
-<summary><b>Read Full Legal Disclaimers</b></summary>
-
-- Upon launch, users are presented with a **Legal Consent Notice**, which is strictly required to proceed.
-- This tool is strictly intended for **legal archiving** of publicly available contents.
-- Downloading copyrighted material without the explicitly granted permission from the rightful owner is **prohibited**.
-- The redistribution, sale, commercial usage, and uploading of the downloaded files are **strictly forbidden**.
-- The user holds **sole legal and civil responsibility** for any misuse or violation of these prohibited actions.
-- **DRM-protected contents** are inherently not supported and actively blocked.
-- We **do not** automatically extract or scrape your browser login sessions or cookies.
-- Users must abide by their local jurisdiction's laws and the respective platform's Terms of Service.
-- This application **does not** feature any DRM circumvention mechanism.
-
-</details>
-
-## 📬 DMCA / Incident Contact
-
-For issues or inquiries, please contact us via **GitHub Issues**.
-
----
-
-## ☕ Support
-
-If you found this tool helpful, consider buying us a coffee!
-
-<a href="https://www.buymeacoffee.com/aminora">
-  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="217">
-</a>
-
----
-
-<p align="center">
-  Made with ❤️ for the open-source community
-</p>
+This repository does not currently include a dedicated license file. Add a formal license before redistributing forks or reusing the source in another project.

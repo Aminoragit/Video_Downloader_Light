@@ -1,186 +1,110 @@
 <p align="center">
-  <img src="assets/header_icon.svg" width="80" height="80" alt="Video Downloader Logo">
+  <img src="tauri-app/src-tauri/icons/icon-256x256.png" width="72" height="72" alt="Video Downloader Light icon">
 </p>
 
-<h1 align="center">🎬 Video Downloader</h1>
+<h1 align="center">Video Downloader Light</h1>
 
 <p align="center">
-  <a href="README.md">🇺🇸 English</a> | <b>🇰🇷 한국어</b>
-</p>
-
-<p align="center">
-  <strong>URL 하나로 공개 영상을 안전하게 백업하는 데스크탑 앱</strong>
+  <strong>다운로드 처리는 사용자 PC에서 실행하고, 배포 파일은 작게 유지하는 Windows 데스크톱 앱입니다.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows">
-  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+">
-  <img src="https://img.shields.io/badge/UI-PySide6_(LGPL)-41CD52?style=for-the-badge&logo=qt&logoColor=white" alt="PySide6">
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="MIT License">
+  <a href="README.md">English</a> ·
+  <a href="README_ko.md"><b>한국어</b></a> ·
+  <a href="README_zh-CN.md">简体中文</a> ·
+  <a href="README_ja.md">日本語</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/weallnoob/Video_Downloader/releases/tag/Installer">
-    <img src="https://img.shields.io/badge/⬇_DOWNLOAD_INSTALLER-2563EB?style=for-the-badge&logoColor=white" alt="Download">
+  <a href="https://github.com/weallnoob/Video_Downloader/releases/latest">
+    <img src="https://img.shields.io/badge/다운로드-Latest%20Release-2459C6?style=for-the-badge" alt="최신 릴리스 다운로드">
   </a>
-  &nbsp;
-  <a href="https://www.buymeacoffee.com/aminora">
-    <img src="https://img.shields.io/badge/☕_Buy_Me_a_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee">
-  </a>
+  <img src="https://img.shields.io/badge/Platform-Windows-207965?style=for-the-badge" alt="Windows">
+  <img src="https://img.shields.io/badge/App-Tauri%202-172331?style=for-the-badge" alt="Tauri 2">
 </p>
 
-<p align="center">
-  <a href="https://github.com/weallnoob/Video_Downloader">
-    <img src="assets/github_star.png" width="400" alt="Please Star the Repository">
-  </a>
-</p>
+## 개요
 
-<h3 align="center">⭐ 프로젝트가 유용하다면 별점(Star)을 눌러주세요! 부탁드립니다. ⭐</h3>
+Video Downloader Light는 로컬 우선 방식의 데스크톱 앱입니다. 서버가 영상 파일을 대신 다운로드하거나 보관하지 않습니다. 사용자는 앱을 설치한 뒤 공개 영상 URL을 입력하고, 저장 옵션을 선택하고, `yt-dlp`, `ffmpeg`, `aria2c` 기반 다운로드를 자신의 PC에서 실행합니다.
 
----
+설치 파일은 작게 유지합니다. 필수 실행 파일은 첫 실행 시 공식 출처에서 내려받고 사용자 로컬 앱 데이터 폴더에 저장합니다.
 
-## ✨ 주요 특징
+## 다운로드
 
-- 🖱️ **원클릭 다운로드:** 복잡한 설정 없이 URL 복붙 후 버튼 한 번으로 즉시 백업
-- 🛡️ **안전한 정책 보호:** 유료 OTT 및 DRM 콘텐츠 자동 차단, 60+ 공개 플랫폼만 허용
-- 🍪 **프라이버시 보장:** 브라우저 쿠키 및 개인 로그인 세션을 절대 수집하지 않음
-- ⚡ **초고속 병렬 다운로드:** `aria2c`를 통한 16-way 분할 다운로드로 압도적인 속도 제공
-- 🎛️ **세밀한 화질 및 음질 제어:** 4K 비디오부터 사용자 맞춤 오디오 포맷(MP3, M4A 등) 강제 변환
-- 📋 **통합 이력 관리:** 방대한 다운로드 기록, 썸네일 제공 및 클릭 한 번으로 손쉬운 재시도
-- 🎨 **모던 데스크탑 UI:** 라운드 디자인 요소와 블루 테마가 반영된 쾌적한 작업 환경 보장
+- 최신 릴리스 페이지: [GitHub Releases](https://github.com/weallnoob/Video_Downloader/releases/latest)
+- 설치 파일 직접 링크: [Video Downloader Light_0.1.0_x64-setup.exe](https://github.com/weallnoob/Video_Downloader/releases/latest/download/Video%20Downloader%20Light_0.1.0_x64-setup.exe)
 
----
+## 주요 기능
 
-## 🚀 설치하기
+- 3개 페이지 UI: 다운로드, 이력, 도네이션.
+- URL 입력, 저장 폴더 선택, 비디오/오디오/All 선택, 비디오 품질, 오디오 품질 설정.
+- 진행 카드에서 섬네일, 제목, 길이, 예상 용량, 프로그래스바, 로그 표시.
+- 이전 다운로드 이력 제공. "새로 다운로드 요청"은 URL만 입력칸에 채우며, 실제 다운로드는 사용자가 버튼을 눌러야 시작됩니다.
+- 첫 실행 시 `yt-dlp`, `ffmpeg`, `aria2c` 자동 설치와 실시간 진행 표시.
+- 서버 다운로드 처리 없이 앱 내부 광고 영역과 후원 페이지 유지.
+- 사용 전 법적 고지 표시. 저작권, DRM, 재배포, 플랫폼 약관 위반에 대한 책임을 명확히 안내합니다.
 
-![심플한 UI](image.png)
+## 사용 방법
 
-### 일반 사용자
+1. 앱을 실행하고 법적 고지에 동의합니다.
+2. 앱이 필수 실행 파일을 확인하고 누락된 구성요소를 설치합니다.
+3. 지원되는 공개 영상 URL을 입력합니다.
+4. 저장 폴더, 다운로드 유형, 비디오 품질, 오디오 품질을 선택합니다.
+5. 다운로드 버튼을 누릅니다.
+6. 진행 상황을 확인하고, 완료 후 이력 페이지에서 기록을 확인합니다.
 
-1. [**Releases**](https://github.com/weallnoob/Video_Downloader/releases/tag/Installer) 페이지에서 `VideoDownloaderInstaller.exe`를 다운로드합니다.
-2. 설치 파일을 실행합니다. (설치 중 `yt-dlp`, `aria2c`, `ffmpeg`를 자동으로 다운로드합니다)
-3. 바탕 화면 아이콘 또는 시작 메뉴에서 **Video Downloader**를 실행합니다.
+## 개인정보 처리 방향
 
-> **💡 인터넷 연결이 필요합니다** — 설치 시 필수 바이너리를 온라인으로 구성합니다.
+- 영상 다운로드 처리는 사용자 PC에서 실행됩니다.
+- 다운로드된 미디어 파일을 서버로 업로드하지 않습니다.
+- 브라우저 쿠키, 로그인 세션, 인증 토큰을 자동 수집하지 않습니다.
+- 설정과 다운로드 이력은 로컬에 저장됩니다.
 
-### 개발자
+## 법적 고지
+
+본 프로젝트는 사용자가 합법적으로 접근하고 저장할 권한이 있는 콘텐츠를 개인적 범위에서 보관하도록 돕기 위한 도구입니다. DRM 우회, 유료 OTT 복제, 접근 통제 우회, 재배포, 판매, 상업적 이용을 목적으로 하지 않습니다.
+
+사용자는 저작권법, 거주 지역의 법령, 각 플랫폼의 이용약관을 직접 확인하고 준수해야 합니다.
+
+## 소스에서 빌드
+
+필요 조건:
+
+- Windows
+- Node.js 및 npm
+- Rust toolchain
+- WebView2 Runtime
 
 ```powershell
-# 의존성 설치
-python -m pip install -r requirements.txt
+# Tauri 설치 파일 빌드
+.\build-tauri.ps1
 
-# 직접 실행
-python app.py
+# 직접 빌드
+cd tauri-app
+npm install
+npm run build
 ```
 
----
+생성되는 NSIS 설치 파일 위치:
 
-## 🔧 빌드 (개발자용)
-
-빌드를 위해 [**Inno Setup 6**](https://jrsoftware.org/isdl.php)이 필요합니다.
-
-```powershell
-# 전체 빌드 (PyInstaller → Inno Setup 인스톨러)
-.\build.ps1
-
-# 빌드 옵션
-.\build.ps1 -OfflineMode              # 오프라인 모드
-.\build.ps1 -SkipInstaller            # 앱 폴더 빌드만
-.\build.ps1 -SkipInstall -SkipDownload # 패키지 설치/다운로드 건너뛰기
+```text
+tauri-app/src-tauri/target/release/bundle/nsis/Video Downloader Light_0.1.0_x64-setup.exe
 ```
 
-<details>
-<summary>📦 <b>빌드 파이프라인 상세</b></summary>
+## 프로젝트 구조
 
-| 단계 | 설명 |
-|------|------|
-| 1. 패키지 설치 | `requirements-build.txt` 기반 Python 패키지 설치 |
-| 2. PyInstaller | `VideoDownloader.spec`으로 앱 번들 생성 (`dist/VideoDownloader/`) |
-| 3. 용량 최적화 | `yt_dlp`, `cryptography`, `curl_cffi` 모듈 및 `opengl32sw.dll` 제외 |
-| 4. Inno Setup | 단일 설치 파일 생성 → `dist/VideoDownloaderInstaller.exe` |
+```text
+tauri-app/
+  ui/                 프론트엔드 HTML, CSS, JavaScript
+  src-tauri/          Rust 백엔드, Tauri 설정, 아이콘, 설치 파일 빌드
+build-tauri.ps1       Windows 빌드 헬퍼
+```
 
-- 인스톨러는 **온라인 모드**(기본)로 동작 — `yt-dlp.exe`, `aria2c.exe`, `ffmpeg.exe`를 설치 시 자동 다운로드
-- 인스톨러 용량을 **최소화**하기 위해 대용량 바이너리를 번들에 포함하지 않음
+## 후원 및 문의
 
-</details>
+- 후원: [Buy Me a Coffee](https://www.buymeacoffee.com/aminora)
+- 이슈: [GitHub Issues](https://github.com/weallnoob/Video_Downloader/issues)
 
----
+## 라이선스
 
-## 🌐 지원 플랫폼
-
-<details>
-<summary>✅ <b>허용 플랫폼 (60+)</b> — 클릭하여 펼치기</summary>
-
-| 카테고리 | 플랫폼 |
-|---------|--------|
-| **글로벌 영상** | YouTube, Vimeo, Dailymotion, Rumble, Odysee, BitChute, PeerTube, DTube |
-| **소셜 미디어** | Facebook Watch, Instagram, X/Twitter, TikTok, Snapchat, Triller, LinkedIn |
-| **라이브 스트리밍** | Twitch, Kick, Trovo, AfreecaTV, Chzzk |
-| **한국** | Naver TV, KakaoTV, AfreecaTV, Chzzk |
-| **중국** | Bilibili, Youku, iQIYI, Tencent Video, Douyin, AcFun, Mango TV |
-| **일본/러시아** | Niconico, NHK World, VK Video, Rutube |
-| **공영 방송** | BBC iPlayer, ITVX, All 4, My5, ARD, ZDF, France.tv |
-| **뉴스/교육** | TED, Coursera, Udemy, Al Jazeera, Bloomberg, CNN |
-| **무료 스트리밍** | Tubi, Pluto TV, Crackle, FilmRise, MagellanTV |
-
-</details>
-
-<details>
-<summary>🚫 <b>차단 플랫폼 (유료 OTT)</b></summary>
-
-Netflix, Hulu, Amazon Prime Video, Disney+, Apple TV+, HBO Max, Paramount+,
-Peacock, Crunchyroll, YouTube TV, ESPN+, Discovery+, FuboTV, Sling TV 등
-
-</details>
-
----
-
-## 🏗️ 기술 스택
-
-| 구성 요소 | 기술 | 역할 |
-|-----------|------|------|
-| **GUI** | PySide6 (Qt 6, LGPL) | 크로스 플랫폼 데스크톱 UI |
-| **다운로더** | yt-dlp | 스트림 추출 및 다운로드 엔진 |
-| **가속기** | aria2c | 16-way 병렬 다운로드 |
-| **후처리** | ffmpeg | 비디오/오디오 병합 및 변환 |
-| **빌드** | PyInstaller + Inno Setup | 단일 설치 파일 생성 |
-
----
-
-## ⚖️ Legal Notice
-
-<details>
-<summary><b>법적 고지 전문 보기</b></summary>
-
-- 앱 실행 시 **법적 고지 동의 팝업**이 표시되며, 미동의 시 프로그램 사용이 불가합니다.
-- 본 도구는 **합법적 콘텐츠**에 한해 사용됩니다.
-- 저작권자 허락 없는 콘텐츠 다운로드를 **금지**합니다.
-- 다운로드한 콘텐츠의 판매, 공유, 재배포, 업로드, 상업적 이용을 **엄격히 금지**합니다.
-- 위 금지행위 위반으로 발생하는 모든 민형사상 책임은 **전적으로 사용자**에게 있습니다.
-- **DRM 보호 콘텐츠**는 지원하지 않으며, 감지 시 차단됩니다.
-- 로그인 세션/브라우저 쿠키 자동 추출 기능을 **제공하지 않습니다**.
-- 사용자는 관련 법률 및 플랫폼 약관을 준수해야 합니다.
-- 본 프로젝트는 DRM 우회 기능을 **포함하지 않습니다**.
-
-</details>
-
-## 📬 DMCA / 신고 대응
-
-침해 신고 접수 시 즉시 검토 및 필요한 조치를 진행합니다.
-이슈 발생시 Issues에 문의바랍니다.
-
----
-
-## ☕ 후원하기
-
-이 프로젝트가 유용하셨다면 커피 한 잔 사주세요!
-
-<a href="https://www.buymeacoffee.com/aminora">
-  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="217">
-</a>
-
----
-
-<p align="center">
-  Made with ❤️ for the open-source community
-</p>
+현재 저장소에는 별도 라이선스 파일이 포함되어 있지 않습니다. 소스 재배포 또는 포크 재사용 전에는 정식 라이선스를 추가하는 것이 필요합니다.

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Downloader Light</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="legalOverlay" class="modal-backdrop" hidden>
+      <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+        <p class="eyebrow">Legal notice</p>
+        <h2 id="legalTitle">사용 전 확인</h2>
+        <div class="legal-scroll">
+          <p class="legal-heading">제1조 (목적)</p>
+          <p>본 도구(이하 "소프트웨어")는 사용자가 합법적으로 접근 및 이용 권한을 보유한 콘텐츠를 개인적·적법한 범위 내에서 저장할 수 있도록 지원하기 위해 제공됩니다.</p>
+          <p>본 소프트웨어는 저작권 침해, 약관 위반 또는 기술적 보호조치 우회를 목적으로 설계되지 않았으며, 그러한 행위를 지원하지 않습니다.</p>
+          <p class="legal-heading">제2조 (이용자의 준수 의무)</p>
+          <p>
+            사용자는 콘텐츠에 대한 다운로드 및 저장 권한을 스스로 확인할 책임이 있습니다.<br />
+            사용자는 거주 국가의 저작권법, 관련 법령 및 해당 서비스의 이용약관을 준수하여야 합니다.<br />
+            저작권자 또는 권리자로부터 명시적 허락을 받지 않은 콘텐츠의 다운로드는 금지됩니다.<br />
+            다운로드한 콘텐츠의 판매, 공유, 재배포, 공개 업로드 또는 상업적 이용은 금지됩니다.
+          </p>
+          <p class="legal-heading">제3조 (지원 범위 및 제한)</p>
+          <p>
+            본 소프트웨어는 DRM(디지털 권리 관리) 또는 기타 기술적 보호조치가 적용된 콘텐츠를 지원하지 않습니다.<br />
+            DRM 또는 보호조치가 감지되는 경우 다운로드는 자동으로 차단됩니다.<br />
+            로그인 세션, 쿠키, 인증 토큰 등을 자동으로 수집하거나 우회하는 기능은 제공하지 않습니다.<br />
+            본 소프트웨어는 특정 플랫폼 전용 도구가 아니며, 내부 정책에 따라 허용된 도메인(allowlist) 범위 내에서만 동작합니다.
+          </p>
+          <p class="legal-heading">제4조 (책임의 한계)</p>
+          <p>
+            본 소프트웨어는 중립적 기술 도구로 제공됩니다.<br />
+            사용자의 위법 또는 약관 위반 행위로 인해 발생하는 모든 법적 책임은 해당 사용자에게 귀속됩니다.<br />
+            개발자는 사용자의 콘텐츠 이용 방식에 대해 사전 통제하거나 개별적으로 검증하지 않습니다.<br />
+            단, 관련 법령에 의해 제한되는 경우를 제외하고, 개발자는 사용자의 위법 행위로 인한 손해에 대해 책임을 부담하지 않습니다.
+          </p>
+          <p class="legal-heading">제5조 (금지 행위)</p>
+          <p>
+            다음 행위는 엄격히 금지됩니다:<br />
+            - DRM 또는 기술적 보호조치 우회 시도<br />
+            - 유료 구독 콘텐츠의 무단 저장<br />
+            - 접근 통제 장치(로그인·인증 등) 우회<br />
+            - 대량 자동화 다운로드로 서비스 운영에 영향을 주는 행위<br />
+            - 다운로드 콘텐츠의 재배포 또는 상업적 이용
+          </p>
+          <p class="legal-heading">제6조 (정책 변경 및 준거법)</p>
+          <p>
+            본 고지는 관련 법령 및 운영 정책에 따라 변경될 수 있습니다.<br />
+            본 소프트웨어의 이용과 관련된 분쟁은 적용 가능한 관할 법령에 따릅니다.
+          </p>
+          <p>현재 서비스에는 쿠팡 파트너스 활동의 일환으로 광고가 표시되며, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+        </div>
+        <button id="acceptLegal" class="primary">동의하고 시작</button>
+      </section>
+    </div>
+
+    <main class="shell">
+      <section class="hero hero-compact">
+        <div>
+          <p class="eyebrow">Local-first downloader</p>
+          <h1>Video Downloader Light</h1>
+          <p class="subcopy">입력, 진행, 이력, 후원을 각 페이지로 나눠 필요한 정보만 보여줍니다.</p>
+        </div>
+        <div class="hero-actions">
+          <div class="runtime-strip" aria-label="필수 구성요소 설치 상태">
+            <div class="runtime-pill"><span id="ytdlpDot" class="runtime-dot pending" aria-hidden="true"></span><strong>yt-dlp</strong><span id="ytdlpStatus" class="runtime-status">확인 중</span></div>
+            <div class="runtime-pill"><span id="ffmpegDot" class="runtime-dot pending" aria-hidden="true"></span><strong>ffmpeg</strong><span id="ffmpegStatus" class="runtime-status">확인 중</span></div>
+            <div class="runtime-pill"><span id="aria2cDot" class="runtime-dot pending" aria-hidden="true"></span><strong>aria2c</strong><span id="aria2cStatus" class="runtime-status">확인 중</span></div>
+          </div>
+          <button id="refreshStatus" class="ghost small-button">상태 새로고침</button>
+        </div>
+      </section>
+
+      <nav class="page-tabs" role="tablist" aria-label="앱 페이지">
+        <button id="tab-download" class="page-tab active" data-page-target="download" role="tab" aria-controls="downloadPage" aria-selected="true" type="button">다운로드</button>
+        <button id="tab-history" class="page-tab" data-page-target="history" role="tab" aria-controls="historyPage" aria-selected="false" type="button">이력</button>
+        <button id="tab-donation" class="page-tab" data-page-target="donation" role="tab" aria-controls="donationPage" aria-selected="false" type="button">도네이션</button>
+      </nav>
+
+      <section id="downloadPage" class="page active" data-page="download" role="tabpanel" aria-labelledby="tab-download">
+        <section class="card input-card">
+          <div class="card-heading">
+            <p class="eyebrow">1-1</p>
+            <h2>새 다운로드 요청</h2>
+          </div>
+          <div class="field">
+            <label for="url">URL 입력</label>
+            <div class="url-row">
+              <input id="url" type="url" placeholder="https://www.youtube.com/watch?v=..." />
+              <button id="downloadButton" class="primary">다운로드 시작</button>
+            </div>
+          </div>
+
+          <div class="settings-grid">
+            <div class="field">
+              <label for="saveDir">저장 경로</label>
+              <div class="folder-row">
+                <input id="saveDir" type="text" readonly aria-readonly="true" title="클릭하여 저장 폴더를 선택" />
+                <button id="chooseSaveDir" class="ghost" type="button">찾기</button>
+              </div>
+            </div>
+            <div class="field">
+              <label for="mode">다운로드 유형</label>
+              <select id="mode">
+                <option value="all">All (비디오 + 오디오)</option>
+                <option value="video">비디오</option>
+                <option value="audio">오디오</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="quality">비디오 품질</label>
+              <select id="quality">
+                <option value="best">자동 최고</option>
+                <option value="2160">2160p 이하</option>
+                <option value="1440">1440p 이하</option>
+                <option value="1080">1080p 이하</option>
+                <option value="720">720p 이하</option>
+                <option value="480">480p 이하</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="audioQuality">오디오 품질</label>
+              <select id="audioQuality">
+                <option value="best">자동 최고</option>
+                <option value="320">320 kbps</option>
+                <option value="256">256 kbps</option>
+                <option value="192">192 kbps</option>
+                <option value="128">128 kbps</option>
+              </select>
+            </div>
+          </div>
+          <div class="action-row">
+            <button id="saveSettings" class="ghost">설정 저장</button>
+          </div>
+        </section>
+
+        <section class="card progress-card">
+          <div class="card-heading">
+            <p class="eyebrow">1-2</p>
+            <h2>진행 과정</h2>
+          </div>
+          <div class="download-progress-layout">
+            <div class="thumbnail-frame">
+              <img id="downloadThumbnail" alt="다운로드 영상 섬네일" hidden />
+              <div id="thumbnailPlaceholder" class="thumbnail-placeholder">Preview</div>
+            </div>
+            <div class="download-meta">
+              <strong id="downloadTitle">대기 중</strong>
+              <div class="meta-grid">
+                <span>길이 <b id="downloadDuration">-</b></span>
+                <span>용량 <b id="downloadSize">-</b></span>
+              </div>
+              <div class="progress-status">
+                <strong id="statusText">대기 중</strong>
+                <span id="progressText">0%</span>
+              </div>
+              <div class="progress-track"><div id="progressBar"></div></div>
+              <p id="installDetail" class="install-detail" hidden></p>
+            </div>
+          </div>
+          <pre id="log"></pre>
+        </section>
+
+        <section class="ad-card" aria-label="광고 영역 1-3">
+          <div class="ad-label">광고</div>
+          <iframe class="ad-frame" title="제휴 광고" src="https://ads-partners.coupang.com/widgets.html?id=977251&template=carousel&trackingCode=AF8246234&subId=&width=100%25&height=100%25&tsource=" referrerpolicy="unsafe-url" loading="lazy"></iframe>
+          <div class="ad-fallback" aria-live="polite" hidden>광고를 불러오지 못했습니다. 네트워크 또는 광고 차단 설정을 확인하세요.</div>
+        </section>
+      </section>
+
+      <section id="historyPage" class="page" data-page="history" role="tabpanel" aria-labelledby="tab-history" hidden>
+        <section class="card">
+          <div class="section-toolbar">
+            <div class="card-heading compact-heading">
+              <p class="eyebrow">2-1</p>
+              <h2>이전 다운로드 이력</h2>
+            </div>
+            <button id="clearHistory" class="ghost small-button">전체 삭제</button>
+          </div>
+          <div id="historyList" class="history-list" aria-live="polite"></div>
+        </section>
+
+        <section class="ad-card" aria-label="광고 영역 2-2">
+          <div class="ad-label">광고</div>
+          <iframe class="ad-frame" title="제휴 광고" src="https://ads-partners.coupang.com/widgets.html?id=977251&template=carousel&trackingCode=AF8246234&subId=history&width=100%25&height=100%25&tsource=" referrerpolicy="unsafe-url" loading="lazy"></iframe>
+          <div class="ad-fallback" aria-live="polite" hidden>광고를 불러오지 못했습니다. 네트워크 또는 광고 차단 설정을 확인하세요.</div>
+        </section>
+      </section>
+
+      <section id="donationPage" class="page" data-page="donation" role="tabpanel" aria-labelledby="tab-donation" hidden>
+        <section class="card donation-card">
+          <p class="eyebrow">3. Donation</p>
+          <h2>이 앱을 계속 가볍게 유지하기 위한 후원</h2>
+          <p>서버 비용을 최소화하고, 다운로드 기능은 사용자 PC에서 직접 실행되도록 유지합니다. 후원은 테스트 인프라와 유지보수 시간을 확보하는 데 사용됩니다.</p>
+          <div class="donation-actions">
+            <button class="primary" data-open-url="https://www.buymeacoffee.com/aminora" type="button">Buy Me a Coffee</button>
+            <button class="ghost" data-open-url="https://github.com/weallnoob/Video_Downloader" type="button">GitHub 보기</button>
+          </div>
+          <div class="donation-note">
+            <strong>운영 원칙</strong>
+            <span>광고와 후원은 유지하되, 다운로드 파일 처리와 개인 데이터는 서버로 보내지 않습니다.</span>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
